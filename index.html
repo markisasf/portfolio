@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Имя Фамилия — Prompt Engineer / AI Specialist</title>
+<title>Марина Фролова — Prompt Engineer / AI Specialist</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
@@ -104,9 +104,69 @@
     justify-content: center;
     padding-top: 90px;
     padding-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cloud-layer{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .cloud{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.16;
+    will-change: transform;
+  }
+  .cloud-1{
+    width: 420px; height: 160px;
+    top: 8%; left: -25%;
+    background: radial-gradient(ellipse at center, var(--accent-2), transparent 70%);
+    animation: driftRight 70s linear infinite;
+  }
+  .cloud-2{
+    width: 340px; height: 130px;
+    top: 32%; left: -20%;
+    background: radial-gradient(ellipse at center, var(--accent), transparent 70%);
+    opacity: 0.1;
+    animation: driftRight 95s linear infinite;
+    animation-delay: -20s;
+  }
+  .cloud-3{
+    width: 500px; height: 190px;
+    top: 58%; left: -30%;
+    background: radial-gradient(ellipse at center, var(--accent-2), transparent 70%);
+    opacity: 0.12;
+    animation: driftRight 110s linear infinite;
+    animation-delay: -45s;
+  }
+  .cloud-4{
+    width: 300px; height: 120px;
+    top: 78%; left: -20%;
+    background: radial-gradient(ellipse at center, var(--accent), transparent 70%);
+    opacity: 0.09;
+    animation: driftRight 85s linear infinite;
+    animation-delay: -10s;
+  }
+  @keyframes driftRight{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(160vw); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cloud{ animation: none; }
   }
 
   .console{
+    position: relative;
+    z-index: 1;
     background: var(--bg-alt);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -189,6 +249,8 @@
   }
 
   .scroll-hint{
+    position: relative;
+    z-index: 1;
     margin-top: 40px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
@@ -624,6 +686,12 @@
 </nav>
 
 <header class="hero wrap">
+  <div class="cloud-layer" aria-hidden="true">
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="cloud cloud-4"></div>
+  </div>
   <div class="console">
     <div class="console-bar">
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -634,7 +702,7 @@
         <span class="chevron">&gt;</span><span id="typed-prompt"></span>
       </div>
       <div class="response" id="response">
-        <h1>ИМЯ ФАМИЛИЯ</h1>
+        <h1>МАРИНА ФРОЛОВА</h1>
         <div class="role">Prompt Engineer · AI-специалист · Vibecoder</div>
         <p class="tagline">Собираю рабочие продукты из диалога с моделью: от точного промта до готового интерфейса. Меньше кода вручную — больше точных инструкций и быстрых итераций.</p>
         <div class="stack">
@@ -697,29 +765,49 @@
   <div class="eyebrow">outputs</div>
   <h2 class="reveal">Генерации</h2>
   <div class="gen-grid">
-    <div class="gen-card reveal">
-      <div class="gen-prompt"><span class="chevron">&gt;</span> «собери внутренний AI-ассистент для поддержки клиентов»</div>
-      <h3>AI-ассистент поддержки</h3>
-      <p>Бот на базе LLM с доступом к базе знаний компании, снизил время ответа оператора в среднем вдвое.</p>
-      <div class="gen-tags"><span>RAG</span><span>Claude</span><span>n8n</span></div>
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>AI-ассистент поддержки</h3>
+          <p>Чат-бот с базой знаний: отвечает на вопросы о заказах, доставке, возврате и оплате.</p>
+        </div>
+        <a class="demo-open" href="ai-assistant-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="ai-assistant-demo.html" data-title="AI-ассистент поддержки">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>RAG-style</span><span>Vanilla JS</span></div>
     </div>
-    <div class="gen-card reveal">
-      <div class="gen-prompt"><span class="chevron">&gt;</span> «нужен прототип за один день, без разработчиков»</div>
-      <h3>MVP за день</h3>
-      <p>Полнофункциональный прототип веб-сервиса, собранный вайбкодингом в Cursor — от макета до рабочей формы.</p>
-      <div class="gen-tags"><span>Vibecoding</span><span>Cursor</span><span>React</span></div>
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>MVP за день</h3>
+          <p>Трекер задач с прогрессом и фильтрами — прототип, собранный вайбкодингом за день.</p>
+        </div>
+        <a class="demo-open" href="mvp-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="mvp-demo.html" data-title="MVP: Трекер задач">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>Vibecoding</span><span>Vanilla JS</span></div>
     </div>
-    <div class="gen-card reveal">
-      <div class="gen-prompt"><span class="chevron">&gt;</span> «стандартизируй промты для всей команды»</div>
-      <h3>Библиотека промтов</h3>
-      <p>Каталог проверенных промт-шаблонов с версионированием — команда перестала «изобретать» запросы заново.</p>
-      <div class="gen-tags"><span>Prompt Library</span><span>Notion API</span></div>
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>Библиотека промтов</h3>
+          <p>Каталог шаблонов с поиском, фильтром по категориям и копированием в один клик.</p>
+        </div>
+        <a class="demo-open" href="prompt-library-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="prompt-library-demo.html" data-title="Библиотека промтов">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>Prompt Library</span><span>Vanilla JS</span></div>
     </div>
-    <div class="gen-card reveal">
-      <div class="gen-prompt"><span class="chevron">&gt;</span> «автоматизируй обработку заявок целиком»</div>
-      <h3>Агентный пайплайн</h3>
-      <p>Цепочка агентов классифицирует, обогащает и маршрутизирует входящие заявки без участия человека.</p>
-      <div class="gen-tags"><span>Agents</span><span>GPT-4</span><span>Automation</span></div>
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>Агентный пайплайн</h3>
+          <p>4 агента классифицируют и маршрутизируют заявку — видно каждый шаг в реальном времени.</p>
+        </div>
+        <a class="demo-open" href="agent-pipeline-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="agent-pipeline-demo.html" data-title="Агентный пайплайн">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>Agents</span><span>Automation</span></div>
     </div>
 
     <div class="gen-card gen-card-demo reveal">
