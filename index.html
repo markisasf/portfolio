@@ -595,6 +595,63 @@
     margin: 0;
   }
 
+  /* ---------- ARTICLES ---------- */
+  .article-list{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .article-card{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .article-card:hover{
+    border-color: var(--border-bright);
+    transform: translateY(-2px);
+  }
+  .article-info h3{
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .article-info p{
+    color: var(--text-dim);
+    font-size: 13.5px;
+    margin: 0 0 10px;
+    max-width: 52ch;
+  }
+  .article-tags{
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .article-tags span{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    border: 1px solid var(--border-bright);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+  .article-link{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    border: 1px solid var(--border-bright);
+    border-radius: 999px;
+    padding: 9px 18px;
+    white-space: nowrap;
+    transition: background .2s ease, color .2s ease;
+  }
+  .article-link:hover{ background: var(--accent); color: #14132B; }
+
   /* ---------- CONTACT ---------- */
   .contact-console{
     background: var(--bg-alt);
@@ -675,11 +732,12 @@
   <div class="nav-inner">
     <span class="nav-tag">&gt; session_active</span>
     <ul class="nav-links">
-      <li><a href="#about">о мне</a></li>
+      <li><a href="#about">обо мне</a></li>
       <li><a href="#skills">параметры</a></li>
       <li><a href="#work">генерации</a></li>
       <li><a href="#art">арт</a></li>
       <li><a href="#gallery">галерея</a></li>
+      <li><a href="#articles">публикации</a></li>
       <li><a href="#contact">контакт</a></li>
     </ul>
   </div>
@@ -720,12 +778,12 @@
 
 <section id="about" class="wrap">
   <div class="eyebrow">system</div>
-  <h2 class="reveal">О мне</h2>
+  <h2 class="reveal">Обо мне</h2>
   <div class="system-card reveal">
     <div class="label">role: <span>system</span></div>
     <p>Я работаю на стыке промт-инженерии и «вайбкодинга» — <strong>собираю продукты в диалоге с AI-моделями</strong>, где промт становится таким же рабочим инструментом, как код.</p>
-    <p>Формулирую задачу так, чтобы модель выдавала не «примерно то», а <strong>именно то, что нужно</strong> — будь то текст, интерфейс, агент или целый пайплайн.</p>
-    <p>Последние проекты: внутренние AI-инструменты, промт-библиотеки для команд, прототипы, собранные за дни, а не спринты.</p>
+    <p>Также создаю визуальный и текстовый контент для зарубежных компаний — иллюстрации, концепт-арты и тексты, часть работ публикую в X (Twitter).</p>
+    <p>Формулирую задачу так, чтобы модель выдавала не «примерно то», а <strong>именно то, что нужно</strong> — будь то текст, иллюстрация, интерфейс или целый пайплайн.</p>
   </div>
 </section>
 
@@ -1113,6 +1171,21 @@
   </div>
 </section>
 
+<section id="articles" class="wrap">
+  <div class="eyebrow">writing</div>
+  <h2 class="reveal">Публикации</h2>
+  <div class="article-list">
+    <div class="article-card reveal">
+      <div class="article-info">
+        <h3>KYVE: гайд по тестнету</h3>
+        <p>Пошаговая статья о том, как участвовать в тестовой сети блокчейн-проекта KYVE Network — для аудитории, незнакомой с темой.</p>
+        <div class="article-tags"><span>Medium</span><span>Web3</span><span>Гайд</span></div>
+      </div>
+      <a class="article-link" href="https://medium.com/@markisasf/kyve-%D1%82%D0%B5%D1%81%D1%82%D0%BD%D0%B5%D1%82-56a5ddf91cc9" target="_blank" rel="noopener">Читать на Medium →</a>
+    </div>
+  </div>
+</section>
+
 <section id="contact" class="wrap">
   <div class="eyebrow">new_message</div>
   <h2 class="reveal">Написать</h2>
@@ -1134,6 +1207,7 @@
     <div class="socials">
       <a href="https://t.me/Markisa_kzn_sf" target="_blank" rel="noopener">Telegram</a>
       <a href="https://github.com/markisasf" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://x.com/bFv48wHjSCKhBze" target="_blank" rel="noopener">X (Twitter)</a>
       <a href="mailto:markisasf@gmail.com">markisasf@gmail.com</a>
     </div>
   </div>
