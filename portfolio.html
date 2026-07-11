@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Марина Фролова — Prompt Engineer / AI Specialist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg: #14132B;
+    --bg-alt: #1C1A3F;
+    --bg-alt-2: #201D48;
+    --text: #F2F0FA;
+    --text-dim: #9C97C4;
+    --text-dimmer: #6B658F;
+    --accent: #E8B04B;
+    --accent-2: #8B7EF0;
+    --border: rgba(242,240,250,0.12);
+    --border-bright: rgba(242,240,250,0.22);
+    --radius: 10px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection{ background: var(--accent); color: #14132B; }
+
+  a{ color: var(--accent-2); }
+
+  :focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .mono{
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(20,19,43,0.75);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .nav-links{
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .nav-links a{
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    transition: color .2s ease;
+  }
+  .nav-links a:hover{ color: var(--text); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 90px;
+    padding-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cloud-layer{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .cloud{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.16;
+    will-change: transform;
+  }
+  .cloud-1{
+    width: 420px; height: 160px;
+    top: 8%; left: -25%;
+    background: radial-gradient(ellipse at center, var(--accent-2), transparent 70%);
+    animation: driftRight 70s linear infinite;
+  }
+  .cloud-2{
+    width: 340px; height: 130px;
+    top: 32%; left: -20%;
+    background: radial-gradient(ellipse at center, var(--accent), transparent 70%);
+    opacity: 0.1;
+    animation: driftRight 95s linear infinite;
+    animation-delay: -20s;
+  }
+  .cloud-3{
+    width: 500px; height: 190px;
+    top: 58%; left: -30%;
+    background: radial-gradient(ellipse at center, var(--accent-2), transparent 70%);
+    opacity: 0.12;
+    animation: driftRight 110s linear infinite;
+    animation-delay: -45s;
+  }
+  .cloud-4{
+    width: 300px; height: 120px;
+    top: 78%; left: -20%;
+    background: radial-gradient(ellipse at center, var(--accent), transparent 70%);
+    opacity: 0.09;
+    animation: driftRight 85s linear infinite;
+    animation-delay: -10s;
+  }
+  @keyframes driftRight{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(160vw); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cloud{ animation: none; }
+  }
+
+  .console{
+    position: relative;
+    z-index: 1;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+  }
+  .console-bar{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot{ width: 9px; height: 9px; border-radius: 50%; background: var(--text-dimmer); }
+  .console-title{
+    margin-left: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dimmer);
+  }
+  .console-body{
+    padding: 28px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+  }
+  .prompt-line{
+    color: var(--text-dim);
+  }
+  .prompt-line .chevron{ color: var(--accent); margin-right: 8px; }
+  #typed-prompt::after{
+    content: '';
+    display: inline-block;
+    width: 8px; height: 16px;
+    background: var(--accent);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+  #typed-prompt.done::after{ display: none; }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  .response{
+    margin-top: 22px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .response.show{ opacity: 1; transform: translateY(0); }
+
+  .response h1{
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .response .role{
+    color: var(--accent);
+    margin-top: 10px;
+    font-size: 16px;
+  }
+  .response .tagline{
+    color: var(--text-dim);
+    margin-top: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    max-width: 56ch;
+  }
+  .response .stack{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    border: 1px solid var(--border-bright);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+
+  .scroll-hint{
+    position: relative;
+    z-index: 1;
+    margin-top: 40px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dimmer);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity .6s ease .3s;
+  }
+  .scroll-hint.show{ opacity: 1; }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding: 90px 0; }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    text-transform: lowercase;
+    margin-bottom: 14px;
+  }
+  .eyebrow::before{ content: '# '; color: var(--text-dimmer); }
+
+  section h2{
+    font-size: clamp(24px, 3.4vw, 34px);
+    margin-bottom: 34px;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.show{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- ABOUT (system card) ---------- */
+  .system-card{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px 32px;
+  }
+  .system-card .label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dimmer);
+    margin-bottom: 16px;
+  }
+  .system-card .label span{ color: var(--accent-2); }
+  .system-card p{
+    color: var(--text-dim);
+    font-size: 16px;
+    margin: 0 0 14px;
+  }
+  .system-card p:last-child{ margin-bottom: 0; }
+  .system-card strong{ color: var(--text); font-weight: 500; }
+
+  /* ---------- PARAMETERS / SKILLS ---------- */
+  .params{
+    display: grid;
+    gap: 22px;
+  }
+  .param-row{
+    display: grid;
+    grid-template-columns: 200px 1fr 56px;
+    gap: 18px;
+    align-items: center;
+  }
+  .param-name{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .param-name small{
+    display: block;
+    color: var(--text-dimmer);
+    font-size: 11px;
+    margin-top: 3px;
+  }
+  .param-track{
+    height: 6px;
+    background: var(--bg-alt-2);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .param-fill{
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    border-radius: 999px;
+    transition: width 1.1s cubic-bezier(.2,.8,.2,1);
+  }
+  .param-value{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dimmer);
+    text-align: right;
+  }
+
+  @media (max-width: 560px){
+    .param-row{ grid-template-columns: 1fr; gap: 8px; }
+    .param-value{ text-align: left; }
+  }
+
+  /* ---------- PROJECTS / GENERATIONS ---------- */
+  .gen-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .gen-card{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .gen-card:hover{
+    border-color: var(--border-bright);
+    transform: translateY(-3px);
+  }
+  .gen-prompt{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dimmer);
+    line-height: 1.5;
+  }
+  .gen-prompt .chevron{ color: var(--accent-2); }
+  .gen-card h3{
+    font-size: 18px;
+  }
+  .gen-card p{
+    color: var(--text-dim);
+    font-size: 14px;
+    margin: 0;
+  }
+  .gen-tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .gen-tags span{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(232,176,75,0.08);
+    border-radius: 5px;
+    padding: 3px 8px;
+  }
+
+  /* ---------- ART DIRECTIONS ---------- */
+  .art-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+  }
+  .art-card{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .art-card:hover{
+    border-color: var(--border-bright);
+    transform: translateY(-3px);
+  }
+  .art-icon{
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--bg-alt-2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+  .art-card h3{
+    font-size: 16px;
+  }
+  .art-card p{
+    color: var(--text-dim);
+    font-size: 13.5px;
+    margin: 0;
+  }
+  .art-note{
+    margin-top: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dimmer);
+  }
+
+  .gen-card-demo{
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .demo-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .demo-head h3{ margin: 0; }
+  .demo-head p{ margin: 4px 0 0; color: var(--text-dim); font-size: 14px; }
+  .demo-open{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    border: 1px solid var(--border-bright);
+    border-radius: 999px;
+    padding: 7px 16px;
+    white-space: nowrap;
+    transition: background .2s ease, color .2s ease;
+  }
+  .demo-open:hover{ background: var(--accent); color: #14132B; }
+  .demo-frame-wrap{
+    display: none;
+  }
+  .live-btn{
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #14132B;
+    background: var(--accent);
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .live-btn:hover{ opacity: .88; }
+  .live-btn:active{ transform: scale(0.97); }
+
+  .modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(10,9,26,0.82);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.open{ display: flex; }
+  .modal-box{
+    width: 100%;
+    max-width: 980px;
+    height: min(80vh, 720px);
+    background: var(--bg-alt);
+    border: 1px solid var(--border-bright);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 40px 100px -30px rgba(0,0,0,0.7);
+  }
+  .modal-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-head span{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .modal-close{
+    background: var(--bg-alt-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .modal-close:hover{ background: var(--danger, #E86B4B); color: #fff; }
+  .modal-box iframe{
+    flex: 1;
+    width: 100%;
+    border: none;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .gallery-card{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .gallery-card:hover{
+    border-color: var(--border-bright);
+    transform: translateY(-3px);
+  }
+  .gallery-visual{
+    background: #100F24;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+  .gallery-visual svg{ width: 100%; height: 100%; }
+  .gallery-caption{
+    padding: 16px 18px;
+  }
+  .gallery-caption h3{
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .gallery-caption p{
+    color: var(--text-dim);
+    font-size: 13px;
+    margin: 0;
+  }
+
+  /* ---------- ARTICLES ---------- */
+  .article-list{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .article-card{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .article-card:hover{
+    border-color: var(--border-bright);
+    transform: translateY(-2px);
+  }
+  .article-info h3{
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .article-info p{
+    color: var(--text-dim);
+    font-size: 13.5px;
+    margin: 0 0 10px;
+    max-width: 52ch;
+  }
+  .article-tags{
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .article-tags span{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    border: 1px solid var(--border-bright);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+  .article-link{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    border: 1px solid var(--border-bright);
+    border-radius: 999px;
+    padding: 9px 18px;
+    white-space: nowrap;
+    transition: background .2s ease, color .2s ease;
+  }
+  .article-link:hover{ background: var(--accent); color: #14132B; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-console{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px 32px;
+  }
+  .contact-console p{ color: var(--text-dim); margin: 0 0 20px; }
+  .input-line{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-alt-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .input-line .chevron{ color: var(--accent); font-family: 'IBM Plex Mono', monospace; }
+  .input-line input, .input-line textarea{
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    resize: none;
+  }
+  .input-line input:focus, .input-line textarea:focus{ outline: none; }
+  .input-line textarea{ min-height: 70px; padding-top: 4px; }
+
+  .send-btn{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    background: var(--accent);
+    color: #14132B;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity .2s ease;
+  }
+  .send-btn:hover{ opacity: .85; }
+
+  .socials{
+    display: flex;
+    gap: 18px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .socials a{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--text-dim);
+    border-bottom: 1px solid transparent;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .socials a:hover{ color: var(--text); border-color: var(--border-bright); }
+
+  footer{
+    padding: 40px 0 60px;
+    text-align: center;
+    color: var(--text-dimmer);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-tag">&gt; session_active</span>
+    <ul class="nav-links">
+      <li><a href="#about">обо мне</a></li>
+      <li><a href="#skills">параметры</a></li>
+      <li><a href="#work">генерации</a></li>
+      <li><a href="#art">арт</a></li>
+      <li><a href="#gallery">галерея</a></li>
+      <li><a href="#articles">публикации</a></li>
+      <li><a href="#contact">контакт</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="cloud-layer" aria-hidden="true">
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="cloud cloud-4"></div>
+  </div>
+  <div class="console">
+    <div class="console-bar">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="console-title">portfolio.session — model: you</span>
+    </div>
+    <div class="console-body">
+      <div class="prompt-line">
+        <span class="chevron">&gt;</span><span id="typed-prompt"></span>
+      </div>
+      <div class="response" id="response">
+        <h1>МАРИНА ФРОЛОВА</h1>
+        <div class="role">Prompt Engineer · AI-специалист · Vibecoder</div>
+        <p class="tagline">Собираю рабочие продукты из диалога с моделью: от точного промта до готового интерфейса. Меньше кода вручную — больше точных инструкций и быстрых итераций.</p>
+        <div class="stack">
+          <span class="chip">GPT / Claude / Gemini</span>
+          <span class="chip">Cursor · Claude Code</span>
+          <span class="chip">RAG</span>
+          <span class="chip">Агенты</span>
+          <span class="chip">n8n / автоматизация</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" id="scroll-hint">↓ <span>scroll to continue session</span></div>
+</header>
+
+<section id="about" class="wrap">
+  <div class="eyebrow">system</div>
+  <h2 class="reveal">Обо мне</h2>
+  <div class="system-card reveal">
+    <div class="label">role: <span>system</span></div>
+    <p>Я работаю на стыке промт-инженерии и «вайбкодинга» — <strong>собираю продукты в диалоге с AI-моделями</strong>, где промт становится таким же рабочим инструментом, как код.</p>
+    <p>Также создаю визуальный и текстовый контент для зарубежных компаний — иллюстрации, концепт-арты и тексты, часть работ публикую в X (Twitter).</p>
+    <p>Формулирую задачу так, чтобы модель выдавала не «примерно то», а <strong>именно то, что нужно</strong> — будь то текст, иллюстрация, интерфейс или целый пайплайн.</p>
+  </div>
+</section>
+
+<section id="skills" class="wrap">
+  <div class="eyebrow">model.parameters</div>
+  <h2 class="reveal">Параметры</h2>
+  <div class="params">
+    <div class="param-row reveal">
+      <div class="param-name">prompt_engineering<small>точность и структура промтов</small></div>
+      <div class="param-track"><div class="param-fill" data-value="95"></div></div>
+      <div class="param-value">0.95</div>
+    </div>
+    <div class="param-row reveal">
+      <div class="param-name">vibecoding<small>сборка продуктов через AI-инструменты</small></div>
+      <div class="param-track"><div class="param-fill" data-value="90"></div></div>
+      <div class="param-value">0.90</div>
+    </div>
+    <div class="param-row reveal">
+      <div class="param-name">agent_design<small>агенты и мультишаговые пайплайны</small></div>
+      <div class="param-track"><div class="param-fill" data-value="80"></div></div>
+      <div class="param-value">0.80</div>
+    </div>
+    <div class="param-row reveal">
+      <div class="param-name">rag_context<small>работа с базами знаний и контекстом</small></div>
+      <div class="param-track"><div class="param-fill" data-value="75"></div></div>
+      <div class="param-value">0.75</div>
+    </div>
+    <div class="param-row reveal">
+      <div class="param-name">product_sense<small>от идеи до готового интерфейса</small></div>
+      <div class="param-track"><div class="param-fill" data-value="85"></div></div>
+      <div class="param-value">0.85</div>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="wrap">
+  <div class="eyebrow">outputs</div>
+  <h2 class="reveal">Генерации</h2>
+  <div class="gen-grid">
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>AI-ассистент поддержки</h3>
+          <p>Чат-бот с базой знаний: отвечает на вопросы о заказах, доставке, возврате и оплате.</p>
+        </div>
+        <a class="demo-open" href="ai-assistant-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="ai-assistant-demo.html" data-title="AI-ассистент поддержки">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>RAG-style</span><span>Vanilla JS</span></div>
+    </div>
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>MVP за день</h3>
+          <p>Трекер задач с прогрессом и фильтрами — прототип, собранный вайбкодингом за день.</p>
+        </div>
+        <a class="demo-open" href="mvp-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="mvp-demo.html" data-title="MVP: Трекер задач">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>Vibecoding</span><span>Vanilla JS</span></div>
+    </div>
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>Библиотека промтов</h3>
+          <p>Каталог шаблонов с поиском, фильтром по категориям и копированием в один клик.</p>
+        </div>
+        <a class="demo-open" href="prompt-library-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="prompt-library-demo.html" data-title="Библиотека промтов">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>Prompt Library</span><span>Vanilla JS</span></div>
+    </div>
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>Агентный пайплайн</h3>
+          <p>4 агента классифицируют и маршрутизируют заявку — видно каждый шаг в реальном времени.</p>
+        </div>
+        <a class="demo-open" href="agent-pipeline-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="agent-pipeline-demo.html" data-title="Агентный пайплайн">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>Agents</span><span>Automation</span></div>
+    </div>
+
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>Инженерный калькулятор</h3>
+          <p>Тригонометрия, логарифмы, степени, память выражения — работает с клавиатуры.</p>
+        </div>
+        <a class="demo-open" href="engineering-calculator.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="engineering-calculator.html" data-title="Инженерный калькулятор">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>Vanilla JS</span><span>math.js</span></div>
+    </div>
+
+    <div class="gen-card gen-card-demo reveal">
+      <div class="demo-head">
+        <div>
+          <h3>Маркетплейс МАРКЕТ.ONE</h3>
+          <p>Поиск, категории, каталог с фильтрацией и рабочей корзиной.</p>
+        </div>
+        <a class="demo-open" href="marketplace-demo.html" target="_blank" rel="noopener">открыть отдельно ↗</a>
+      </div>
+      <button class="live-btn" data-src="marketplace-demo.html" data-title="Маркетплейс МАРКЕТ.ONE">▶ Смотреть вживую</button>
+      <div class="gen-tags"><span>E-commerce UI</span><span>Vanilla JS</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="art" class="wrap">
+  <div class="eyebrow">visual_outputs</div>
+  <h2 class="reveal">Арт-направление</h2>
+  <div class="art-grid">
+    <div class="art-card reveal">
+      <div class="art-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M3 17l5-6 4 4 4-6 5 8"/><circle cx="8" cy="7" r="2"/>
+        </svg>
+      </div>
+      <h3>Концепт-арты</h3>
+      <p>Визуальные концепции окружения, локаций и настроения — от референсов до финального арта.</p>
+    </div>
+    <div class="art-card reveal">
+      <div class="art-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/>
+        </svg>
+      </div>
+      <h3>Персонажи</h3>
+      <p>Дизайн персонажей: силуэт, характер, вариации образа для игр и историй.</p>
+    </div>
+    <div class="art-card reveal">
+      <div class="art-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/>
+          <rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>
+        </svg>
+      </div>
+      <h3>UI-иконки для игр</h3>
+      <p>Наборы иконок интерфейса: инвентарь, навыки, статусы — читаемые в любом масштабе.</p>
+    </div>
+    <div class="art-card reveal">
+      <div class="art-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 15l4.5-4.5 3 3L16 8l5 5"/>
+        </svg>
+      </div>
+      <h3>Иллюстрации к статьям</h3>
+      <p>Обложки и врезки для текстов — доносят идею статьи с первого взгляда.</p>
+    </div>
+  </div>
+  <p class="art-note">Примеры работ — в отдельном разделе / по запросу.</p>
+</section>
+
+<section id="gallery" class="wrap">
+  <div class="eyebrow">gallery</div>
+  <h2 class="reveal">Галерея</h2>
+  <div class="gallery-grid">
+
+    <div class="gallery-card reveal">
+      <div class="gallery-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="locSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0F0E24"/>
+              <stop offset="55%" stop-color="#1F1C4A"/>
+              <stop offset="100%" stop-color="#33296E"/>
+            </linearGradient>
+            <radialGradient id="locMoonGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#F3C97A" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#F3C97A" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="locMoon" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#FFE7B8"/>
+              <stop offset="100%" stop-color="#E8B04B"/>
+            </radialGradient>
+            <linearGradient id="locRidge1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3A3480"/>
+              <stop offset="100%" stop-color="#282460"/>
+            </linearGradient>
+            <linearGradient id="locRidge2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#241F52"/>
+              <stop offset="100%" stop-color="#191536"/>
+            </linearGradient>
+            <linearGradient id="locRidge3" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#14122C"/>
+              <stop offset="100%" stop-color="#0C0B1E"/>
+            </linearGradient>
+            <filter id="locBlur"><feGaussianBlur stdDeviation="2.2"/></filter>
+          </defs>
+          <rect width="400" height="300" fill="url(#locSky)"/>
+          <circle cx="322" cy="58" r="50" fill="url(#locMoonGlow)"/>
+          <circle cx="322" cy="58" r="22" fill="url(#locMoon)"/>
+          <circle cx="60" cy="40" r="1.4" fill="#F2F0FA" opacity="0.8"/>
+          <circle cx="100" cy="70" r="1" fill="#F2F0FA" opacity="0.6"/>
+          <circle cx="230" cy="30" r="1.2" fill="#F2F0FA" opacity="0.7"/>
+          <circle cx="180" cy="55" r="1" fill="#F2F0FA" opacity="0.5"/>
+          <circle cx="380" cy="120" r="1" fill="#F2F0FA" opacity="0.5"/>
+          <polygon points="0,300 0,175 60,110 130,190 190,120 250,195 400,130 400,300" fill="url(#locRidge1)"/>
+          <polygon points="0,300 0,220 90,155 165,230 225,170 295,235 400,195 400,300" fill="url(#locRidge2)" filter="url(#locBlur)"/>
+          <polygon points="0,300 0,250 100,205 190,255 400,235 400,300" fill="url(#locRidge3)"/>
+          <rect x="177" y="82" width="9" height="75" fill="#0C0B1E"/>
+          <polygon points="172,82 191,82 181.5,60" fill="#0C0B1E"/>
+          <circle cx="181.5" cy="98" r="2.4" fill="#8B7EF0"/>
+          <circle cx="181.5" cy="98" r="6" fill="#8B7EF0" opacity="0.25" filter="url(#locBlur)"/>
+          <rect x="0" y="286" width="400" height="14" fill="#0F0E24" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="gallery-caption">
+        <h3>Концепт локации</h3>
+        <p>Атмосферная перспектива и свет луны создают глубину сцены и настроение.</p>
+      </div>
+    </div>
+
+    <div class="gallery-card reveal">
+      <div class="gallery-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="charBg" cx="50%" cy="35%" r="70%">
+              <stop offset="0%" stop-color="#241F52"/>
+              <stop offset="100%" stop-color="#12112A"/>
+            </radialGradient>
+            <linearGradient id="cloakGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3A3480"/>
+              <stop offset="60%" stop-color="#242058"/>
+              <stop offset="100%" stop-color="#151332"/>
+            </linearGradient>
+            <linearGradient id="cloakInner" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0E0C22"/>
+              <stop offset="100%" stop-color="#050510"/>
+            </linearGradient>
+            <radialGradient id="hoodGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#E8B04B" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#E8B04B" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="charBlur"><feGaussianBlur stdDeviation="3"/></filter>
+          </defs>
+          <rect width="400" height="300" fill="url(#charBg)"/>
+          <ellipse cx="150" cy="258" rx="72" ry="12" fill="#050510" opacity="0.6"/>
+          <path d="M150 66 C114 66 100 100 106 134 L92 262 L208 262 L194 134 C200 100 186 66 150 66 Z" fill="url(#cloakGrad)"/>
+          <path d="M118 150 L106 134 C100 100 114 66 150 66 C150 66 128 96 122 140 Z" fill="#453D96" opacity="0.5"/>
+          <path d="M108 138 C86 152 74 188 78 224 L98 224 L106 156 Z" fill="url(#cloakInner)"/>
+          <path d="M192 138 C214 152 226 188 222 224 L202 224 L194 156 Z" fill="url(#cloakInner)"/>
+          <path d="M120 150 Q150 172 180 150 L178 190 Q150 205 122 190 Z" fill="#0A0918"/>
+          <circle cx="150" cy="56" r="30" fill="url(#cloakGrad)"/>
+          <circle cx="150" cy="60" r="18" fill="#0A0918"/>
+          <circle cx="150" cy="60" r="26" fill="url(#hoodGlow)" filter="url(#charBlur)"/>
+          <circle cx="142" cy="60" r="3.4" fill="#FFE7B8"/>
+          <circle cx="158" cy="60" r="3.4" fill="#FFE7B8"/>
+          <rect x="139" y="146" width="22" height="52" rx="5" fill="#E8B04B"/>
+          <rect x="139" y="146" width="22" height="52" rx="5" fill="none" stroke="#FFE7B8" stroke-width="1" opacity="0.4"/>
+          <circle cx="150" cy="172" r="6" fill="#FFE7B8" opacity="0.7"/>
+          <circle cx="310" cy="80" r="10" fill="#8B7EF0" opacity="0.35" filter="url(#charBlur)"/>
+          <circle cx="330" cy="110" r="6" fill="#E8B04B" opacity="0.4" filter="url(#charBlur)"/>
+          <circle cx="80" cy="95" r="7" fill="#8B7EF0" opacity="0.3" filter="url(#charBlur)"/>
+        </svg>
+      </div>
+      <div class="gallery-caption">
+        <h3>Дизайн персонажа</h3>
+        <p>Объёмный силуэт, мягкий свет капюшона и акцентная деталь — амулет.</p>
+      </div>
+    </div>
+
+    <div class="gallery-card reveal">
+      <div class="gallery-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="iconBg" cx="50%" cy="40%" r="75%">
+              <stop offset="0%" stop-color="#1D1A44"/>
+              <stop offset="100%" stop-color="#0B0A1C"/>
+            </radialGradient>
+            <radialGradient id="badgeFill" cx="35%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#2B2760"/>
+              <stop offset="100%" stop-color="#181535"/>
+            </radialGradient>
+            <filter id="iconGlow"><feGaussianBlur stdDeviation="4"/></filter>
+          </defs>
+          <rect width="400" height="300" fill="url(#iconBg)"/>
+
+          <g>
+            <circle cx="80" cy="90" r="20" fill="#E86B4B" opacity="0.35" filter="url(#iconGlow)"/>
+            <circle cx="80" cy="90" r="34" fill="url(#badgeFill)" stroke="#E86B4B" stroke-width="2"/>
+            <path d="M80 78 C74 66 56 69 56 84 C56 98 80 112 80 112 C80 112 104 98 104 84 C104 69 86 66 80 78 Z" fill="#E86B4B"/>
+            <path d="M72 84 C72 79 78 78 80 82" stroke="#FFD9CC" stroke-width="1.5" fill="none" opacity="0.7"/>
+          </g>
+
+          <g>
+            <circle cx="200" cy="90" r="20" fill="#8B7EF0" opacity="0.35" filter="url(#iconGlow)"/>
+            <circle cx="200" cy="90" r="34" fill="url(#badgeFill)" stroke="#8B7EF0" stroke-width="2"/>
+            <rect x="197" y="64" width="6" height="40" rx="2" fill="#B9AFFA"/>
+            <rect x="185" y="98" width="30" height="6" rx="2" fill="#8B7EF0"/>
+            <polygon points="200,58 207,64 193,64" fill="#B9AFFA"/>
+          </g>
+
+          <g>
+            <circle cx="320" cy="90" r="20" fill="#E8B04B" opacity="0.35" filter="url(#iconGlow)"/>
+            <circle cx="320" cy="90" r="34" fill="url(#badgeFill)" stroke="#E8B04B" stroke-width="2"/>
+            <path d="M320 66 L340 76 C340 98 330 112 320 118 C310 112 300 98 300 76 Z" fill="#E8B04B"/>
+            <path d="M320 74 L332 80 C332 94 326 104 320 108" stroke="#FFE7B8" stroke-width="1.5" fill="none" opacity="0.6"/>
+          </g>
+
+          <g>
+            <circle cx="80" cy="207" r="20" fill="#7FD9A8" opacity="0.35" filter="url(#iconGlow)"/>
+            <circle cx="80" cy="207" r="34" fill="url(#badgeFill)" stroke="#7FD9A8" stroke-width="2"/>
+            <rect x="74" y="184" width="12" height="10" rx="1" fill="#7FD9A8"/>
+            <path d="M69 195 L91 195 L98 220 C98 231 84 235 80 235 C76 235 62 231 62 220 Z" fill="#7FD9A8" opacity="0.9"/>
+            <ellipse cx="80" cy="216" rx="9" ry="5" fill="#C9F5DC" opacity="0.5"/>
+          </g>
+
+          <g>
+            <circle cx="200" cy="207" r="20" fill="#E8B04B" opacity="0.35" filter="url(#iconGlow)"/>
+            <circle cx="200" cy="207" r="34" fill="url(#badgeFill)" stroke="#E8B04B" stroke-width="2"/>
+            <circle cx="200" cy="207" r="17" fill="none" stroke="#E8B04B" stroke-width="3"/>
+            <circle cx="200" cy="207" r="17" fill="none" stroke="#FFE7B8" stroke-width="1" opacity="0.5"/>
+            <text x="200" y="213" font-family="IBM Plex Mono, monospace" font-size="15" fill="#FFE7B8" text-anchor="middle">$</text>
+          </g>
+
+          <g>
+            <circle cx="320" cy="207" r="20" fill="#8B7EF0" opacity="0.35" filter="url(#iconGlow)"/>
+            <circle cx="320" cy="207" r="34" fill="url(#badgeFill)" stroke="#8B7EF0" stroke-width="2"/>
+            <polygon points="320,184 338,197 330,224 310,224 302,197" fill="#8B7EF0"/>
+            <polygon points="320,192 330,199 325,216 315,216 310,199" fill="#D8D2FC" opacity="0.5"/>
+          </g>
+        </svg>
+      </div>
+      <div class="gallery-caption">
+        <h3>UI-иконки для игр</h3>
+        <p>Свечение и объём делают иконки узнаваемыми даже в мелком масштабе интерфейса.</p>
+      </div>
+    </div>
+
+    <div class="gallery-card reveal">
+      <div class="gallery-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="artBg" cx="50%" cy="50%" r="75%">
+              <stop offset="0%" stop-color="#2A2660"/>
+              <stop offset="100%" stop-color="#100F24"/>
+            </radialGradient>
+            <radialGradient id="nodeCore" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#FFE7B8"/>
+              <stop offset="100%" stop-color="#E8B04B"/>
+            </radialGradient>
+            <radialGradient id="nodeSmall" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#C9C1FA"/>
+              <stop offset="100%" stop-color="#8B7EF0"/>
+            </radialGradient>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#8B7EF0" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#8B7EF0" stop-opacity="0.15"/>
+            </linearGradient>
+            <filter id="artGlow"><feGaussianBlur stdDeviation="5"/></filter>
+          </defs>
+          <rect width="400" height="300" fill="url(#artBg)"/>
+          <circle cx="200" cy="150" r="70" fill="none" stroke="#8B7EF0" stroke-width="1" opacity="0.25"/>
+          <circle cx="200" cy="150" r="16" fill="#E8B04B" opacity="0.3" filter="url(#artGlow)"/>
+
+          <line x1="200" y1="150" x2="118" y2="95" stroke="url(#lineGrad)" stroke-width="1.6"/>
+          <line x1="200" y1="150" x2="284" y2="95" stroke="url(#lineGrad)" stroke-width="1.6"/>
+          <line x1="200" y1="150" x2="118" y2="205" stroke="url(#lineGrad)" stroke-width="1.6"/>
+          <line x1="200" y1="150" x2="284" y2="205" stroke="url(#lineGrad)" stroke-width="1.6"/>
+          <line x1="200" y1="150" x2="200" y2="62" stroke="url(#lineGrad)" stroke-width="1.6"/>
+          <line x1="200" y1="150" x2="200" y2="238" stroke="url(#lineGrad)" stroke-width="1.6"/>
+          <line x1="118" y1="95" x2="200" y2="62" stroke="#8B7EF0" stroke-width="1" opacity="0.3"/>
+          <line x1="284" y1="95" x2="200" y2="62" stroke="#8B7EF0" stroke-width="1" opacity="0.3"/>
+          <line x1="118" y1="205" x2="200" y2="238" stroke="#8B7EF0" stroke-width="1" opacity="0.3"/>
+          <line x1="284" y1="205" x2="200" y2="238" stroke="#8B7EF0" stroke-width="1" opacity="0.3"/>
+
+          <circle cx="200" cy="150" r="11" fill="url(#nodeCore)"/>
+          <circle cx="118" cy="95" r="6.5" fill="url(#nodeSmall)"/>
+          <circle cx="284" cy="95" r="6.5" fill="url(#nodeSmall)"/>
+          <circle cx="118" cy="205" r="6.5" fill="url(#nodeSmall)"/>
+          <circle cx="284" cy="205" r="6.5" fill="url(#nodeSmall)"/>
+          <circle cx="200" cy="62" r="6.5" fill="url(#nodeSmall)"/>
+          <circle cx="200" cy="238" r="6.5" fill="url(#nodeSmall)"/>
+        </svg>
+      </div>
+      <div class="gallery-caption">
+        <h3>Иллюстрация к статье</h3>
+        <p>Светящаяся сеть узлов — метафора для текста про ИИ, промты и связи идей.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="articles" class="wrap">
+  <div class="eyebrow">writing</div>
+  <h2 class="reveal">Публикации</h2>
+  <div class="article-list">
+    <div class="article-card reveal">
+      <div class="article-info">
+        <h3>KYVE: гайд по тестнету</h3>
+        <p>Пошаговая статья о том, как участвовать в тестовой сети блокчейн-проекта KYVE Network — для аудитории, незнакомой с темой.</p>
+        <div class="article-tags"><span>Medium</span><span>Web3</span><span>Гайд</span></div>
+      </div>
+      <a class="article-link" href="https://medium.com/@markisasf/kyve-%D1%82%D0%B5%D1%81%D1%82%D0%BD%D0%B5%D1%82-56a5ddf91cc9" target="_blank" rel="noopener">Читать на Medium →</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="wrap">
+  <div class="eyebrow">new_message</div>
+  <h2 class="reveal">Написать</h2>
+  <div class="contact-console reveal">
+    <p>Опишите задачу — и я предложу, как её лучше решить: промтом, агентом или быстрым прототипом.</p>
+    <div class="input-line">
+      <span class="chevron">&gt;</span>
+      <input type="text" id="contact-name" placeholder="ваше имя" aria-label="Ваше имя">
+    </div>
+    <div class="input-line">
+      <span class="chevron">&gt;</span>
+      <input type="email" id="contact-email" placeholder="ваш email" aria-label="Ваш email">
+    </div>
+    <div class="input-line">
+      <span class="chevron">&gt;</span>
+      <textarea id="contact-message" placeholder="опишите задачу..." aria-label="Сообщение"></textarea>
+    </div>
+    <button class="send-btn" id="send-btn">отправить →</button>
+    <div class="socials">
+      <a href="https://t.me/Markisa_kzn_sf" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://github.com/markisasf" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://x.com/bFv48wHjSCKhBze" target="_blank" rel="noopener">X (Twitter)</a>
+      <a href="mailto:markisasf@gmail.com">markisasf@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 · session terminated · спасибо, что дочитали до конца</footer>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span id="modal-title">preview</span>
+      <button class="modal-close" id="modal-close" aria-label="Закрыть">✕</button>
+    </div>
+    <iframe id="modal-iframe" src="" title="Живой просмотр"></iframe>
+  </div>
+</div>
+
+<script>
+  // Typing animation for hero prompt
+  const promptText = "покажи портфолио промт-инженера, который занимается вайбкодингом";
+  const typedEl = document.getElementById('typed-prompt');
+  const responseEl = document.getElementById('response');
+  const scrollHint = document.getElementById('scroll-hint');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function typeWriter(){
+    if(reduceMotion){
+      typedEl.textContent = promptText;
+      typedEl.classList.add('done');
+      revealResponse();
+      return;
+    }
+    let i = 0;
+    const interval = setInterval(() => {
+      typedEl.textContent = promptText.slice(0, i+1);
+      i++;
+      if(i >= promptText.length){
+        clearInterval(interval);
+        typedEl.classList.add('done');
+        setTimeout(revealResponse, 300);
+      }
+    }, 35);
+  }
+
+  function revealResponse(){
+    responseEl.classList.add('show');
+    setTimeout(() => scrollHint.classList.add('show'), 400);
+  }
+
+  window.addEventListener('load', () => setTimeout(typeWriter, 400));
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Params fill animation
+  const paramFills = document.querySelectorAll('.param-fill');
+  const paramIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const fill = entry.target.querySelector('.param-fill');
+        if(fill){
+          const val = fill.getAttribute('data-value');
+          setTimeout(() => { fill.style.width = val + '%'; }, 150);
+        }
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.param-row').forEach(row => paramIo.observe(row));
+
+  // Contact form -> mailto
+  document.getElementById('send-btn').addEventListener('click', () => {
+    const name = document.getElementById('contact-name').value || 'без имени';
+    const email = document.getElementById('contact-email').value || '';
+    const message = document.getElementById('contact-message').value || '';
+    const subject = encodeURIComponent('Новый запрос через портфолио от ' + name);
+    const body = encodeURIComponent(`Имя: ${name}\nEmail: ${email}\n\n${message}`);
+    window.location.href = `mailto:markisasf@gmail.com?subject=${subject}&body=${body}`;
+  });
+  // Live preview modal
+  const overlay = document.getElementById('modal-overlay');
+  const modalIframe = document.getElementById('modal-iframe');
+  const modalTitle = document.getElementById('modal-title');
+  const modalClose = document.getElementById('modal-close');
+
+  function openModal(src, title){
+    modalIframe.src = src;
+    modalTitle.textContent = title;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    modalIframe.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.live-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openModal(btn.getAttribute('data-src'), btn.getAttribute('data-title'));
+    });
+  });
+  modalClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeModal();
+  });
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+</script>
+
+</body>
+</html>
