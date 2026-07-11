@@ -65,6 +65,18 @@
   .prompt-head{
     display:flex; justify-content:space-between; align-items:flex-start; gap: 12px; margin-bottom: 8px;
   }
+  .real-badge{
+    font-family:'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ok);
+    margin-top: 4px;
+  }
+  .card-actions{
+    display:flex; align-items:center; gap: 14px; flex-wrap: wrap;
+  }
+  .source-link{
+    font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent-2);
+    text-decoration: none;
+  }
+  .source-link:hover{ text-decoration: underline; }
   .prompt-title{ font-size: 15px; font-weight: 600; }
   .prompt-cat{
     font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent-2);
@@ -155,6 +167,40 @@
       id: 8, cat: 'Поддержка клиентов',
       title: 'FAQ-ответ из документации',
       text: 'На основе приложенной документации сформулируй короткий ответ на вопрос клиента: [вопрос]. Ответ должен быть точным, без лишних деталей, с указанием, куда обратиться, если это не решает проблему.'
+    },
+    {
+      id: 9, cat: 'Соцсети / Web3',
+      title: 'Твит-тред по брифу проекта',
+      real: true,
+      sources: [
+        'https://x.com/bFv48wHjSCKhBze/status/2061817762813493530',
+        'https://x.com/bFv48wHjSCKhBze/status/2052011126804660701'
+      ],
+      text: `Напиши мне текст для твиттера на тему [бриф проекта, включая структуру по пунктам, ключевую мысль каждого раздела, обязательные ссылки/упоминания и список ключевых слов, которые нужно использовать естественно]. Текст не должен превышать максимальное количество символов для твиттера.`
+    },
+    {
+      id: 10, cat: 'Соцсети / Web3',
+      title: 'Разбивка текста на тред',
+      real: true,
+      sources: [
+        'https://x.com/bFv48wHjSCKhBze/status/2061817762813493530',
+        'https://x.com/bFv48wHjSCKhBze/status/2052011126804660701'
+      ],
+      text: 'Подели текст на [количество] твитов/тредов.'
+    },
+    {
+      id: 11, cat: 'Генерация изображений',
+      title: 'Картинка + текст под конкретную тему',
+      real: true,
+      sources: [
+        'https://x.com/bFv48wHjSCKhBze/status/2061817762813493530',
+        'https://x.com/bFv48wHjSCKhBze/status/2052011126804660701',
+        'https://x.com/bFv48wHjSCKhBze/status/2054196399080644914',
+        'https://x.com/bFv48wHjSCKhBze/status/2050547352482496709',
+        'https://x.com/bFv48wHjSCKhBze/status/2041466826727600381',
+        'https://x.com/bFv48wHjSCKhBze/status/2045129670094426117'
+      ],
+      text: 'Создай картинку, подходящую по смыслу к тексту на тему [тема, например: лошадиные скачки, гонки на авто], и обязательно напиши текст о проекте.'
     }
   ];
 
@@ -198,11 +244,17 @@
       card.className = 'prompt-card';
       card.innerHTML = `
         <div class="prompt-head">
-          <div class="prompt-title">${p.title}</div>
+          <div>
+            <div class="prompt-title">${p.title}</div>
+            ${p.real ? '<div class="real-badge">✓ реальный кейс</div>' : ''}
+          </div>
           <div class="prompt-cat">${p.cat}</div>
         </div>
         <div class="prompt-text">${p.text}</div>
-        <button class="copy-btn" data-id="${p.id}">Скопировать промт</button>
+        <div class="card-actions">
+          <button class="copy-btn" data-id="${p.id}">Скопировать промт</button>
+          ${(p.sources || []).map((src, i) => `<a class="source-link" href="${src}" target="_blank" rel="noopener">Пример ${i+1} →</a>`).join('')}
+        </div>
       `;
       gridEl.appendChild(card);
     });
